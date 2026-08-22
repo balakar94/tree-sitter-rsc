@@ -1,0 +1,77 @@
+==========
+Simple menu command — two levels
+==========
+
+/ip route print
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))))
+
+==========
+Menu command — one level
+==========
+
+/ip
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))))
+
+==========
+Menu command — multiple levels
+==========
+
+/interface bridge port add
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))))
+
+==========
+Menu command — five levels
+==========
+
+/ip firewall filter add chain=input action=accept
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      (identifier)
+      (identifier))
+    (named_param
+      (identifier)
+      (identifier))))

@@ -1,0 +1,223 @@
+====================
+Two menu commands separated by one blank line
+====================
+
+/ip route print
+
+/ip service print
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier)))
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))))
+
+====================
+Multiple consecutive blank lines between commands
+====================
+
+/ip route print
+
+
+/ip service print
+
+
+:put "done"
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier)))
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier)))
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (string))))
+
+====================
+Blank lines around comment before a command
+====================
+
+# interface overview
+
+/interface print
+
+---
+
+(source_file
+  (comment)
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))))
+
+====================
+Leading blank line at start of file
+====================
+
+/ip route print
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))))
+
+====================
+Trailing blank lines at end of file
+====================
+
+/ip route print
+
+
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))))
+
+====================
+Blank line between statements inside a do block
+====================
+
+:if true do={
+  :put "first"
+
+  :put "second"
+}
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (identifier)
+    (do_block
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (string)))
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (string)))))))
+
+====================
+Blank line before closing brace of a do block
+====================
+
+:foreach i in=[1 2 3] do={
+  :put $i
+
+}
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (identifier)
+    (for_in_clause
+      (command_substitution
+        (menu_continuation
+          (literal
+            (number))
+          (literal
+            (number))
+          (literal
+            (number)))))
+    (do_block
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (variable_reference
+            (identifier)))))))
+
+====================
+If do block followed by blank line and another statement
+====================
+
+:if ($var > 10) do={
+  :put "large"
+}
+
+/ip route print
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (subexpression
+      (function_call
+        (variable_reference
+          (identifier))
+        (operator))
+      (literal
+        (number)))
+    (do_block
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (string))))))
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))))

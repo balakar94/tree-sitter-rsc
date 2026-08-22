@@ -1,0 +1,16 @@
+[package]
+name = "tree-sitter-rsc"
+version = "0.1.5"
+edition = "2024"
+license = "Apache-2.0"
+description = "Tree-sitter grammar for MikroTik RouterOS Script"
+authors = ["Francisco"]
+
+[lib]
+path = "bindings/rust/lib.rs"
+
+[dependencies]
+tree-sitter = "0.25"
+
+[build-dependencies]
+cc = "1.0"

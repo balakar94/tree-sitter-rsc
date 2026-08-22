@@ -1,0 +1,16 @@
+# Build artifacts
+target/
+build/
+node_modules/
+
+# Local npm lockfile (CI uses: npm ci || npm install)
+package-lock.json
+
+# OS / tooling caches
+.DS_Store
+.pytest_cache/
+*.log
+
+# Local parser artifacts (regenerable)
+/parser.dylib
+/tree-sitter-rsc.wasm

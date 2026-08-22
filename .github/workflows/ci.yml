@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Grammar (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install dependencies
+        run: npm install
+      - name: Check generated parser is fresh
+        run: |
+          npx tree-sitter generate
+          git diff --exit-code -- src/parser.c src/grammar.json src/node-types.json \
+            || (echo "generated files are stale — run 'npx tree-sitter generate' and commit" && exit 1)
+      - name: Corpus tests
+        run: npx tree-sitter test
+      - name: Fixtures parse without ERROR/MISSING
+        run: |
+          npx tree-sitter parse -q test/simple.rsc
+          npx tree-sitter parse -q test/example.rsc
+
+  rust:
+    name: Rust binding
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Test crate
+        run: cargo test

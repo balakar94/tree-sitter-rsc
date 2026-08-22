@@ -1,0 +1,37 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "rsc",
+      "scope": "source.rsc",
+      "file-types": ["rsc"],
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm",
+      "injection-regex": "^rsc$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.5",
+    "license": "Apache-2.0",
+    "description": "Tree-sitter grammar for MikroTik RouterOS Script Language",
+    "authors": [
+      {
+        "name": "Francisco"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/balakar94/tree-sitter-rsc"
+    }
+  },
+  "bindings": {
+    "c": false,
+    "go": false,
+    "java": false,
+    "kotlin": false,
+    "node": true,
+    "python": false,
+    "rust": true,
+    "swift": false,
+    "zig": false
+  }
+}
