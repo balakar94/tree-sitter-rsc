@@ -276,6 +276,9 @@ module.exports = grammar({
         repeat(choice(
           /[^"\\\n\r]+/,
           /\\./,
+          // Line continuation inside a string (RouterOS `source=` scripts
+          // span lines this way): backslash followed by an explicit newline.
+          /\\\r?\n/,
         )),
         '"',
       )),
