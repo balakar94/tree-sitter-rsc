@@ -4,7 +4,7 @@ version = "0.1.5"
 edition = "2024"
 license = "Apache-2.0"
 description = "Tree-sitter grammar for MikroTik RouterOS Script"
-authors = ["Francisco"]
+authors = ["balakar94"]
 
 [lib]
 path = "bindings/rust/lib.rs"
