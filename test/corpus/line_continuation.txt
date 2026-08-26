@@ -1,0 +1,27 @@
+================================
+Line continuation joins menu params
+================================
+
+/ip route add gateway=1.1.1.1 \
+     comment="x"
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (ip_address)))
+    (line_continuation)
+    (named_param
+      name: (identifier)
+      value: (literal
+        (string)))))

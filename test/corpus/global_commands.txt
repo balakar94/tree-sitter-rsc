@@ -42,7 +42,8 @@
     (global_command_name
       (identifier))
     (identifier)
-    (identifier)))
+    (literal
+      (boolean_literal))))
 
 ==========
 :set with value
@@ -89,8 +90,7 @@
     (global_command_name
       (identifier))
     (literal
-      (number))
-    (identifier)))
+      (duration))))
 
 ==========
 :return
@@ -104,7 +104,8 @@
   (global_command
     (global_command_name
       (identifier))
-    (identifier)))
+    (literal
+      (boolean_literal))))
 
 ==========
 :nothing

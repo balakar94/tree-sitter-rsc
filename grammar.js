@@ -185,6 +185,8 @@ module.exports = grammar({
         $.string,
         $.boolean_literal,
         $.nil_literal,
+        $.mac_address,
+        $.duration,
         $.ip_address,
         $.ip_prefix,
       ),
@@ -204,15 +206,16 @@ module.exports = grammar({
     variable_reference: ($) =>
       choice(
         seq("$", $.identifier),
+        seq("$", /[0-9]+/),
         seq("$", $.global_command_name),
       ),
 
     array_access: ($) =>
-      seq(
+      prec(2, seq(
         field("array", choice($.variable_reference, $.identifier)),
         "->",
         field("key", choice($.string, $.identifier, $.number)),
-      ),
+      )),
 
     // ── Command substitution: [cmd] ─────────────────────────
     command_substitution: ($) =>
@@ -284,9 +287,15 @@ module.exports = grammar({
       )),
 
     boolean_literal: ($) =>
-      token(choice("true", "false", "yes", "no")),
+      token(prec(2, choice("true", "false", "yes", "no"))),
 
     nil_literal: ($) => token("nil"),
+
+    mac_address: ($) =>
+      token(prec(2, /([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}/)),
+
+    duration: ($) =>
+      token(prec(2, /[0-9]+[wdhmsu]+([0-9]+[wdhmsu]+)*/)),
 
     ip_address: ($) =>
       token(choice(
@@ -296,7 +305,10 @@ module.exports = grammar({
 
     ip_prefix: ($) =>
       token(seq(
-        /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/,
+        choice(
+          /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/,
+          /[0-9a-fA-F:]+:[0-9a-fA-F:]+/,
+        ),
         "/",
         /[0-9]+/,
       )),

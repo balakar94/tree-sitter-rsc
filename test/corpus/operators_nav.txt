@@ -9,7 +9,6 @@ Parent navigation
 (source_file
   (parent_navigation))
 
-
 ==========
 Arithmetic operators
 ==========
@@ -40,7 +39,6 @@ Arithmetic operators
       (operator)
       (literal
         (number)))))
-
 
 ==========
 Comparison operators
@@ -82,7 +80,6 @@ Comparison operators
       (variable_reference
         (identifier)))))
 
-
 ==========
 Logical operators
 ==========
@@ -96,12 +93,14 @@ Logical operators
     (global_command_name
       (identifier))
     (subexpression
-      (identifier)
+      (literal
+        (boolean_literal))
       (operator)
-      (identifier)
+      (literal
+        (boolean_literal))
       (operator)
-      (identifier))))
-
+      (literal
+        (boolean_literal)))))
 
 ==========
 Logical keyword operators
@@ -116,12 +115,14 @@ Logical keyword operators
     (global_command_name
       (identifier))
     (subexpression
+      (literal
+        (boolean_literal))
       (identifier)
+      (literal
+        (boolean_literal))
       (identifier)
-      (identifier)
-      (identifier)
-      (identifier))))
-
+      (literal
+        (boolean_literal)))))
 
 ==========
 Negation operator
@@ -137,8 +138,8 @@ Negation operator
       (identifier))
     (subexpression
       (operator)
-      (identifier))))
-
+      (literal
+        (boolean_literal)))))
 
 ==========
 Bitwise operators
@@ -165,7 +166,6 @@ Bitwise operators
       (literal
         (ip_address)))))
 
-
 ==========
 Shift operators
 ==========
@@ -188,7 +188,6 @@ Shift operators
       (literal
         (number)))))
 
-
 ==========
 Regex match
 ==========
@@ -207,7 +206,6 @@ Regex match
       (operator)
       (literal
         (string)))))
-
 
 ==========
 Concatenation dot
@@ -231,7 +229,6 @@ Concatenation dot
       (literal
         (string)))))
 
-
 ==========
 In operator
 ==========
@@ -250,5 +247,3 @@ In operator
       (identifier)
       (literal
         (ip_prefix)))))
-
-

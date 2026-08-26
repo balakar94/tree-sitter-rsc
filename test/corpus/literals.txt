@@ -13,7 +13,6 @@ Decimal number
     (literal
       (number))))
 
-
 ==========
 Hex number
 ==========
@@ -28,7 +27,6 @@ Hex number
       (identifier))
     (literal
       (number))))
-
 
 ==========
 IPv4 address
@@ -45,7 +43,6 @@ IPv4 address
     (literal
       (ip_address))))
 
-
 ==========
 IPv4 with CIDR
 ==========
@@ -60,7 +57,6 @@ IPv4 with CIDR
       (identifier))
     (literal
       (ip_prefix))))
-
 
 ==========
 IPv6 address
@@ -77,7 +73,6 @@ IPv6 address
     (literal
       (ip_address))))
 
-
 ==========
 Boolean true/false
 ==========
@@ -90,11 +85,14 @@ Boolean true/false
   (global_command
     (global_command_name
       (identifier))
-    (identifier)
-    (identifier)
-    (identifier)
-    (identifier)))
-
+    (literal
+      (boolean_literal))
+    (literal
+      (boolean_literal))
+    (literal
+      (boolean_literal))
+    (literal
+      (boolean_literal))))
 
 ==========
 Nil literal
@@ -110,5 +108,3 @@ Nil literal
       (identifier))
     (literal
       (nil_literal))))
-
-

@@ -1,2 +1,2 @@
 ; RSC has no embedded languages — this file is intentionally empty.
-; Kept for parity with mikrotik-zed/languages/rsc/injections.scm.
+; Registered in tree-sitter.json for completeness; no injections are defined.

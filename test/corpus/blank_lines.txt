@@ -136,7 +136,8 @@ Blank line between statements inside a do block
   (global_command
     (global_command_name
       (identifier))
-    (identifier)
+    (literal
+      (boolean_literal))
     (do_block
       (block
         (global_command
