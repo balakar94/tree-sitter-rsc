@@ -13,7 +13,6 @@ Variable reference
     (variable_reference
       (identifier))))
 
-
 ==========
 Variable in string
 ==========
@@ -28,7 +27,6 @@ Variable in string
       (identifier))
     (literal
       (string))))
-
 
 ==========
 Multiple variable references
@@ -45,12 +43,10 @@ Multiple variable references
     (function_call
       function: (variable_reference
         (identifier))
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (variable_reference
-          (identifier))))))
-
+      (variable_reference
+        (identifier)))
+    (variable_reference
+      (identifier))))
 
 ==========
 Array access with arrow
@@ -65,13 +61,10 @@ Array access with arrow
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        function: (variable_reference
+      (array_access
+        (variable_reference
           (identifier))
-        (operator))
-      (literal
         (string)))))
-
 
 ==========
 Array access with numeric key
@@ -86,11 +79,28 @@ Array access with numeric key
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        function: (variable_reference
+      (array_access
+        (variable_reference
           (identifier))
-        (operator))
-      (literal
         (number)))))
 
+==========
+Numeric and global command variable references
+==========
 
+:put $1
+:put $:resolve
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (variable_reference))
+  (global_command
+    (global_command_name
+      (identifier))
+    (variable_reference
+      (global_command_name
+        (identifier)))))

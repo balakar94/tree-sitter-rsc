@@ -53,30 +53,24 @@ Comparison operators
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
+      (variable_reference
+        (identifier))
+      (operator)
+      (variable_reference
+        (identifier))
+      (operator)
+      (variable_reference
+        (identifier))
+      (operator)
+      (variable_reference
+        (identifier))
+      (operator)
+      (variable_reference
+        (identifier))
+      (operator)
+      (variable_reference
+        (identifier))
+      (operator)
       (variable_reference
         (identifier)))))
 

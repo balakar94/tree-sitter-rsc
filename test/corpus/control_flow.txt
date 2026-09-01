@@ -1,0 +1,63 @@
+====================
+If with do and else blocks
+====================
+
+:if ($x > 1) do={ :put "hi" } else={ :put "bye" }
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (subexpression
+      (variable_reference
+        (identifier))
+      (operator)
+      (literal
+        (number)))
+    (do_block
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (string)))))
+    (else_block
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (string)))))))
+
+====================
+Foreach with in and do
+====================
+
+:foreach i in=[/ip address find] do={ :put $i }
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (identifier)
+    (for_in_clause
+      (command_substitution
+        (menu_command
+          (menu_prefix)
+          (root_menu
+            (identifier))
+          (sub_menu
+            (identifier))
+          (sub_menu
+            (identifier)))))
+    (do_block
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (variable_reference
+            (identifier)))))))

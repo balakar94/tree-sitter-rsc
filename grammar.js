@@ -43,6 +43,8 @@ module.exports = grammar({
     [$.source_file, $._statement_separator],
     // Same ambiguity inside blocks, whose body mirrors source_file.
     [$.block, $._statement_separator],
+    // Same ambiguity inside command_substitution, whose body also mirrors source_file.
+    [$.command_substitution, $._statement_separator],
     // `:do {...}` binds a block; `{...}` elsewhere after a command is an
     // array. Both rules can parse identical contents (values are also
     // statements), so GLR explores both; prec.dynamic on `array` favors it
@@ -78,7 +80,7 @@ module.exports = grammar({
         $.parent_navigation,
       ),
 
-    line_continuation: ($) => token(seq("\\", "\n")),
+    line_continuation: ($) => token(seq("\\", optional("\r"), "\n")),
     parent_navigation: ($) => token(".."),
 
     // ── Menu commands: /path param* ───────────────────────────
@@ -211,7 +213,7 @@ module.exports = grammar({
       ),
 
     array_access: ($) =>
-      prec(2, seq(
+      prec(3, seq(
         field("array", choice($.variable_reference, $.identifier)),
         "->",
         field("key", choice($.string, $.identifier, $.number)),
@@ -221,7 +223,9 @@ module.exports = grammar({
     command_substitution: ($) =>
       seq(
         "[",
-        $._statement,
+        optional($._statement),
+        repeat($._terminated_statement),
+        optional(choice(";", "\n")),
         "]",
       ),
 
@@ -257,15 +261,21 @@ module.exports = grammar({
       ),
 
     // ── Function call: $func params ─────────────────────────
+    // Avoid recursion into another function_call: $a $b $c should be flat
+    // arguments (or sibling values), not nested calls. Restrict args to
+    // non-recursive value types (no nested function_call, array, etc.).
     function_call: ($) =>
       prec(1, seq(
         field("function", $.variable_reference),
-        repeat1($._value),
+        repeat1(choice($.named_param, $.literal, $.variable_reference, $.identifier)),
       )),
 
     // ── Tokens ──────────────────────────────────────────────
+    // Do not allow trailing '-' so that `->` is not consumed as part of an
+    // identifier (e.g. `$arr->"key"` should be `$arr` + `->` + `"key"`).
+    // Dash inside is allowed via `-` + alnum segments.
     identifier: ($) =>
-      /[a-zA-Z_][a-zA-Z0-9_@-]*/,
+      /[a-zA-Z_][a-zA-Z0-9_@]*(-[a-zA-Z0-9_@]+)*/ ,
 
     number: ($) =>
       token(choice(
@@ -274,17 +284,30 @@ module.exports = grammar({
       )),
 
     string: ($) =>
-      token(seq(
-        '"',
-        repeat(choice(
-          /[^"\\\n\r]+/,
-          /\\./,
-          // Line continuation inside a string (RouterOS `source=` scripts
-          // span lines this way): backslash followed by an explicit newline.
-          /\\\r?\n/,
-        )),
-        '"',
-      )),
+      token(
+        choice(
+          seq(
+            '"',
+            repeat(choice(
+              /[^"\\\n\r]+/,
+              /\\./,
+              // Line continuation inside a string (RouterOS `source=` scripts
+              // span lines this way): backslash followed by an explicit newline.
+              /\\\r?\n/,
+            )),
+            '"',
+          ),
+          seq(
+            "'",
+            repeat(choice(
+              /[^'\\\n\r]+/,
+              /\\./,
+              /\\\r?\n/,
+            )),
+            "'",
+          ),
+        ),
+      ),
 
     boolean_literal: ($) =>
       token(prec(2, choice("true", "false", "yes", "no"))),
@@ -295,23 +318,23 @@ module.exports = grammar({
       token(prec(2, /([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}/)),
 
     duration: ($) =>
-      token(prec(2, /[0-9]+[wdhmsu]+([0-9]+[wdhmsu]+)*/)),
+      token(prec(2, /[0-9]+(ms|us|w|d|h|m|s)([0-9]+(ms|us|w|d|h|m|s))*/)),
 
     ip_address: ($) =>
       token(choice(
         /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/,
-        /[0-9a-fA-F:]+:[0-9a-fA-F:]+/,
+        /([0-9A-Fa-f]{0,4}:){2,7}[0-9A-Fa-f]{0,4}/,
       )),
 
     ip_prefix: ($) =>
-      token(seq(
+      token(prec(2, seq(
         choice(
           /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/,
-          /[0-9a-fA-F:]+:[0-9a-fA-F:]+/,
+          /([0-9A-Fa-f]{0,4}:){2,7}[0-9A-Fa-f]{0,4}/,
         ),
         "/",
         /[0-9]+/,
-      )),
+      ))),
 
     // ── Comment: # ... ─────────────────────────────────────
     comment: ($) =>

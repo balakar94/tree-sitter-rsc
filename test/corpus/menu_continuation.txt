@@ -1,0 +1,40 @@
+====================
+Indented menu continuation — address and interface
+====================
+
+    address=192.168.1.1/24 interface=ether1
+
+---
+
+(source_file
+  (menu_continuation
+    (named_param
+      name: (identifier)
+      value: (literal
+        (ip_prefix)))
+    (named_param
+      name: (identifier)
+      value: (identifier))))
+
+====================
+Indented continuation — gateway distance and comment
+====================
+
+    gateway=10.0.0.1 distance=1 comment="test"
+
+---
+
+(source_file
+  (menu_continuation
+    (named_param
+      name: (identifier)
+      value: (literal
+        (ip_address)))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (number)))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (string)))))

@@ -201,10 +201,9 @@ If do block followed by blank line and another statement
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        (variable_reference
-          (identifier))
-        (operator))
+      (variable_reference
+        (identifier))
+      (operator)
       (literal
         (number)))
     (do_block

@@ -23,13 +23,11 @@ Semicolon separator
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
+      (variable_reference
+        (identifier))
+      (operator)
       (variable_reference
         (identifier)))))
-
 
 ==========
 Newline separator
@@ -58,13 +56,11 @@ Newline separator
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
+      (variable_reference
+        (identifier))
+      (operator)
       (variable_reference
         (identifier)))))
-
 
 ==========
 Mixed separators
@@ -92,10 +88,9 @@ Mixed separators
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
+      (variable_reference
+        (identifier))
+      (operator)
       (variable_reference
         (identifier))))
   (global_command
@@ -103,5 +98,3 @@ Mixed separators
       (identifier))
     (literal
       (string))))
-
-

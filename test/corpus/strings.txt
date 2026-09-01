@@ -62,3 +62,67 @@ String with dollar
       (string))))
 
 
+==========
+Single-quote string
+==========
+
+:put 'hello world'
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (string))))
+
+
+==========
+Single-quote string with escaped single quote
+==========
+
+:put 'it\'s ok'
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (string))))
+
+
+==========
+Single-quote string with double quote inside
+==========
+
+:put 'say "hello"'
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (string))))
+
+
+==========
+Double-quote string with single quote inside
+==========
+
+:put "it's ok"
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (string))))
+
+

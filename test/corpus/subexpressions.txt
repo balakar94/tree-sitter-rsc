@@ -17,7 +17,6 @@ Subexpression arithmetic
       (literal
         (number)))))
 
-
 ==========
 Subexpression comparison
 ==========
@@ -31,13 +30,11 @@ Subexpression comparison
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
+      (variable_reference
+        (identifier))
+      (operator)
       (variable_reference
         (identifier)))))
-
 
 ==========
 Subexpression complex
@@ -52,20 +49,17 @@ Subexpression complex
     (global_command_name
       (identifier))
     (subexpression
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
+      (variable_reference
+        (identifier))
+      (operator)
       (literal
         (number))
       (identifier)
-      (function_call
-        function: (variable_reference
-          (identifier))
-        (operator))
+      (variable_reference
+        (identifier))
+      (operator)
       (literal
         (number)))))
-
 
 ==========
 Nested subexpression
@@ -89,5 +83,3 @@ Nested subexpression
       (operator)
       (literal
         (number)))))
-
-

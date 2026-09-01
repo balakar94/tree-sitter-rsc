@@ -156,8 +156,8 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
           "type": "array",
@@ -311,22 +311,6 @@
       "required": true,
       "types": [
         {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_access",
-          "named": true
-        },
-        {
-          "type": "command_substitution",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
@@ -335,11 +319,7 @@
           "named": true
         },
         {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "subexpression",
+          "type": "named_param",
           "named": true
         },
         {
