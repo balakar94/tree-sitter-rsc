@@ -1,0 +1,40 @@
+=========================
+Line continuation inside subexpression
+=========================
+
+:put ("a" . \
+  "b")
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (subexpression
+      (literal
+        (string))
+      (operator)
+      (line_continuation)
+      (literal
+        (string)))))
+
+=========================
+Flat function call with three variables
+=========================
+
+:put $a $b $c
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (function_call
+      function: (variable_reference
+        (identifier))
+      (variable_reference
+        (identifier)))
+    (variable_reference
+      (identifier))))
