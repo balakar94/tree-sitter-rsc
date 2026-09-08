@@ -1,0 +1,35 @@
+==========
+Slash-verb shorthand with concat comment and find substitution
+==========
+
+/ipv6/nd/prefix/add comment=("X" . $y) interface=[find default-name=ether1]
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier)
+    (operator)
+    (identifier)
+    (operator)
+    (identifier)
+    (named_param
+      (identifier)
+      (subexpression
+        (literal
+          (string))
+        (operator)
+        (variable_reference
+          (identifier))))
+    (named_param
+      (identifier)
+      (command_substitution
+        (menu_continuation
+          (identifier)
+          (named_param
+            (identifier)
+            (identifier)))))))
