@@ -108,3 +108,207 @@ Nil literal
       (identifier))
     (literal
       (nil_literal))))
+
+==========
+URL literal
+==========
+
+:put https://example.com
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (url))))
+
+==========
+URL as named parameter value
+==========
+
+/ip dns set use-doh-server=https://cloudflare-dns.com/dns-query
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (url)))))
+
+==========
+URL with port and path
+==========
+
+:put http://router.local:8080/status?verbose=yes
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (url))))
+
+==========
+Colon-separated time-like scalar value
+==========
+
+/system clock set start-time=03:17
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (mixed_value)))))
+
+==========
+Colon-separated classifier scalar value
+==========
+
+/ip firewall filter add per-connection-classifier=both-addresses:2/0
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (mixed_value)))))
+
+==========
+Colon-separated scalar in hop-limit
+==========
+
+/ip firewall filter add hop-limit=equal:1
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (mixed_value)))))
+
+==========
+Colon-separated scalar in client-id
+==========
+
+/ip dhcp-server lease add client-id=1:50
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (mixed_value)))))
+
+==========
+Colon-separated scalar as bare value then another command
+==========
+
+:put 1:2
+:put 2
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (mixed_value)))
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (number))))
+
+==========
+IPv6 is not mistaken for a mixed scalar
+==========
+
+:put 2001:db8:0:0:0:0:0:1
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (ip_address))))
+
+==========
+Digit-led account scalar value
+==========
+
+/interface pppoe-client add user=048038813@digi
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (mixed_value)))))

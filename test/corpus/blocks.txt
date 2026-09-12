@@ -9,4 +9,120 @@ Empty block
 (source_file
   (array))
 
+==========
+Block as named parameter value (source)
+==========
+
+/system script add source={ :put 1 }
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (number)))))))
+
+==========
+Block as named parameter value (on-event)
+==========
+
+/system scheduler add name=x interval=1h on-event={ :put "tick" }
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (duration)))
+    (named_param
+      name: (identifier)
+      value: (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (string)))))))
+
+==========
+Block as in-clause value (onerror)
+==========
+
+:onerror e in={ :put 1 } do={ :put 2 }
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (identifier)
+    (for_in_clause
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (number)))))
+    (do_block
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (number)))))))
+
+==========
+Nested statement blocks
+==========
+
+:if true do={ :if true do={ :put 1 } }
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (boolean_literal))
+    (do_block
+      (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (literal
+            (boolean_literal))
+          (do_block
+            (block
+              (global_command
+                (global_command_name
+                  (identifier))
+                (literal
+                  (number))))))))))
+
 

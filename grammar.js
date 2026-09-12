@@ -146,14 +146,18 @@ module.exports = grammar({
     do_block: ($) => seq(optional(seq("do", "=")), $.block),
     else_block: ($) => seq("else", "=", $.block),
     while_condition: ($) => seq("while", "=", $.subexpression),
-    for_in_clause: ($) => seq("in", "=", $._value),
+    // `in=` accepts a value/array (foreach) or a statement block
+    // (`:onerror e in={ … } do={ … }`).
+    for_in_clause: ($) => seq("in", "=", choice($._value, $.block)),
 
     // ── Named param: key=value ───────────────────────────────
+    // The value may also be a statement `block`, e.g.
+    // `/system script add source={ :put 1 }` or `on-event={ … }`.
     named_param: ($) =>
       prec(1, seq(
         field("name", $.identifier),
         "=",
-        optional(field("value", $._value)),
+        optional(field("value", choice($._value, $.block))),
       )),
 
     // ── Block: { ... } ──────────────────────────────────────
@@ -191,6 +195,8 @@ module.exports = grammar({
         $.duration,
         $.ip_address,
         $.ip_prefix,
+        $.url,
+        $.mixed_value,
       ),
 
     // ── Operators (token only, not structured) ──────────────
@@ -205,11 +211,14 @@ module.exports = grammar({
 
     // ── Variable references ─────────────────────────────────
     // `$:cmd` (command shorthand after $) is accepted alongside `$var`.
+    // `$"quoted name"` supports variables whose names are not identifiers,
+    // e.g. `$"mac-address"` or `$"received-bits-per-second"`.
     variable_reference: ($) =>
       choice(
         seq("$", $.identifier),
         seq("$", /[0-9]+/),
         seq("$", $.global_command_name),
+        seq("$", $.string),
       ),
 
     array_access: ($) =>
@@ -320,11 +329,14 @@ module.exports = grammar({
     duration: ($) =>
       token(prec(2, /[0-9]+(ms|us|w|d|h|m|s)([0-9]+(ms|us|w|d|h|m|s))*/)),
 
+    // Higher precedence guarantees a full IPv6 address wins over the
+    // colon-containing `mixed_value` on inputs both tokens match completely
+    // (e.g. `2001:db8:0:0:0:0:0:1`).
     ip_address: ($) =>
-      token(choice(
+      token(prec(2, choice(
         /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/,
         /([0-9A-Fa-f]{0,4}:){2,7}[0-9A-Fa-f]{0,4}/,
-      )),
+      ))),
 
     ip_prefix: ($) =>
       token(prec(2, seq(
@@ -335,6 +347,29 @@ module.exports = grammar({
         "/",
         /[0-9]+/,
       ))),
+
+    // ── URL: scheme://… ─────────────────────────────────────
+    // Bare URL values such as `use-doh-server=https://cloudflare-dns.com/dns-query`
+    // or adlist `url=https://…`. The token stops at whitespace, quotes,
+    // statement/sentence delimiters, comment (`#`) and variable (`$`) starts.
+    url: ($) =>
+      token(prec(1, seq(
+        /[a-zA-Z][a-zA-Z0-9+.\-]*/,
+        "://",
+        /[^\s;{}()\[\]"'\\,#$]+/,
+      ))),
+
+    // ── Mixed scalar: colon-separated or account-like values ──
+    // Values such as `03:17` (time), `1:50` (client-id),
+    // `both-addresses:2/0` (classifier) or `048038813@digi` (account)
+    // that are neither plain numbers, identifiers, IPs nor MACs. The
+    // token must start alphanumeric so a colon that opens a token
+    // (e.g. `:put`) is never swallowed.
+    mixed_value: ($) =>
+      token(choice(
+        /[A-Za-z0-9_][A-Za-z0-9_@.\-]*(:[A-Za-z0-9_@.\/\-]+)+/,
+        /[0-9]+@[A-Za-z0-9_.\-]+/,
+      )),
 
     // ── Comment: # ... ─────────────────────────────────────
     comment: ($) =>

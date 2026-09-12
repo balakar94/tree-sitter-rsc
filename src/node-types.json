@@ -261,6 +261,10 @@
           "named": true
         },
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "command_substitution",
           "named": true
         },
@@ -444,6 +448,10 @@
           "named": true
         },
         {
+          "type": "mixed_value",
+          "named": true
+        },
+        {
           "type": "nil_literal",
           "named": true
         },
@@ -453,6 +461,10 @@
         },
         {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "url",
           "named": true
         }
       ]
@@ -604,6 +616,10 @@
           },
           {
             "type": "array_access",
+            "named": true
+          },
+          {
+            "type": "block",
             "named": true
           },
           {
@@ -794,6 +810,10 @@
         {
           "type": "identifier",
           "named": true
+        },
+        {
+          "type": "string",
+          "named": true
         }
       ]
     }
@@ -904,6 +924,10 @@
     "named": true
   },
   {
+    "type": "mixed_value",
+    "named": true
+  },
+  {
     "type": "nil_literal",
     "named": true
   },
@@ -921,6 +945,10 @@
   },
   {
     "type": "string",
+    "named": true
+  },
+  {
+    "type": "url",
     "named": true
   },
   {

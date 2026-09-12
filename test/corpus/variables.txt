@@ -104,3 +104,18 @@ Numeric and global command variable references
     (variable_reference
       (global_command_name
         (identifier)))))
+
+==========
+Quoted variable reference
+==========
+
+:put $"my var"
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (variable_reference
+      (string))))
