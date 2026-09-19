@@ -83,6 +83,14 @@
           {
             "type": "string",
             "named": true
+          },
+          {
+            "type": "subexpression",
+            "named": true
+          },
+          {
+            "type": "variable_reference",
+            "named": true
           }
         ]
       }

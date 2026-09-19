@@ -1,0 +1,81 @@
+==========
+Quarantined export: long URL with port and query stays one token
+==========
+
+/tool/fetch add url=https://example.com:8443/list?key=value&other=1 mode=https
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier)
+    (identifier)
+    (named_param
+      name: (identifier)
+      value: (literal
+        (url)))
+    (named_param
+      name: (identifier)
+      value: (identifier))))
+
+==========
+Quarantined export: block-valued on-event with quoted variable
+==========
+
+/system/scheduler add name=nightly on-event={ :log info $"my-var" } interval=1d
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier)
+    (identifier)
+    (named_param
+      name: (identifier)
+      value: (identifier))
+    (named_param
+      name: (identifier)
+      value: (block
+        (global_command
+          (global_command_name
+            (identifier))
+          (identifier)
+          (variable_reference
+            (string)))))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (duration)))))
+
+==========
+Quarantined export: DoH URL plus boolean flag
+==========
+
+/ip/dns set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier)
+    (identifier)
+    (named_param
+      name: (identifier)
+      value: (literal
+        (url)))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (boolean_literal)))))

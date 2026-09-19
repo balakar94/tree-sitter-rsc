@@ -1,0 +1,98 @@
+==========
+Array access with variable key
+==========
+
+:put $arr->$i
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (array_access
+      (variable_reference
+        (identifier))
+      (variable_reference
+        (identifier)))))
+
+==========
+Array access with string key
+==========
+
+:put $arr->"key"
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (array_access
+      (variable_reference
+        (identifier))
+      (string))))
+
+==========
+Array access with numeric key
+==========
+
+:put $arr->0
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (array_access
+      (variable_reference
+        (identifier))
+      (number))))
+
+==========
+Array access with subexpression key
+==========
+
+:put $arr->($i + 1)
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (array_access
+      (variable_reference
+        (identifier))
+      (subexpression
+        (variable_reference
+          (identifier))
+        (operator)
+        (literal
+          (number))))))
+
+==========
+Nested array accesses in subexpression
+==========
+
+:put ($arr->$i + $arr->$j)
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (subexpression
+      (array_access
+        (variable_reference
+          (identifier))
+        (variable_reference
+          (identifier)))
+      (operator)
+      (array_access
+        (variable_reference
+          (identifier))
+        (variable_reference
+          (identifier))))))

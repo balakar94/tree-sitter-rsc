@@ -225,7 +225,13 @@ module.exports = grammar({
       prec(3, seq(
         field("array", choice($.variable_reference, $.identifier)),
         "->",
-        field("key", choice($.string, $.identifier, $.number)),
+        field("key", choice(
+          $.string,
+          $.identifier,
+          $.number,
+          $.variable_reference,
+          $.subexpression,
+        )),
       )),
 
     // ── Command substitution: [cmd] ─────────────────────────
@@ -286,9 +292,14 @@ module.exports = grammar({
     identifier: ($) =>
       /[a-zA-Z_][a-zA-Z0-9_@]*(-[a-zA-Z0-9_@]+)*/ ,
 
+    // Plain decimal/hex numbers plus RouterOS rate/size values with SI
+    // suffixes (`512k`, `10M`, `1G`) and queue rate pairs (`512k/1M`).
+    // Lowercase `m` is accepted here too, but `duration` has higher lexical
+    // precedence, so `10m` still parses as a duration (minutes).
     number: ($) =>
       token(choice(
         /0[xX][0-9a-fA-F]+/,
+        /[0-9]+[kKmMgGtT](\/[0-9]+[kKmMgGtT])?/,
         /[0-9]+/,
       )),
 

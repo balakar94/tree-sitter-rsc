@@ -1,0 +1,128 @@
+==========
+Kilobit rate value
+==========
+
+:put 512k
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (number))))
+
+==========
+Megabit and gigabit rate values
+==========
+
+:put 10M
+:put 1G
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (number)))
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (number))))
+
+==========
+Queue rate pair with slash
+==========
+
+/queue simple add max-limit=512k/1M
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (number)))))
+
+==========
+Rate pair inside subexpression
+==========
+
+:put (512k/1M)
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (subexpression
+      (literal
+        (number)))))
+
+==========
+Wireless rate with suffix
+==========
+
+/interface wireless set rate=10M
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (sub_menu
+      (identifier))
+    (named_param
+      name: (identifier)
+      value: (literal
+        (number)))))
+
+==========
+Lowercase m suffix stays a duration
+==========
+
+:put 10m
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (duration))))
+
+==========
+Division after suffixed number is not swallowed
+==========
+
+:put 2M/2
+
+---
+
+(source_file
+  (global_command
+    (global_command_name
+      (identifier))
+    (literal
+      (number))
+    (operator)
+    (literal
+      (number))))
