@@ -76,12 +76,32 @@ module.exports = grammar({
         $.menu_command,
         $.menu_continuation,
         $.global_command,
+        $.print_query,
+        $.block,
         $._value,
         $.parent_navigation,
       ),
 
     line_continuation: ($) => token(seq("\\", optional("\r"), "\n")),
     parent_navigation: ($) => token(".."),
+
+    // ── Print query: ?query-words ─────────────────────────────
+    // CLI `print` filters start with `?` and continue with query words:
+    // property selectors (`?type=ether`, `?>comment=`) and the
+    // single-character query symbols `#` (own-columns marker), `&`/`|`/`!`
+    // (combine/negate) and `<`/`>` (order). A `?` opens no other statement,
+    // so this rule only claims input that previously produced an ERROR.
+    print_query: ($) =>
+      seq(
+        "?",
+        repeat1(choice($.named_param, $.query_symbol)),
+      ),
+
+    // One query symbol per token so `?#|!` stays three symbols. `#` also
+    // opens a comment, so it needs higher lexical precedence to win in the
+    // query state; elsewhere the two tokens are never both valid.
+    query_symbol: ($) =>
+      token(prec(2, choice("#", "&", "|", "!", "<", ">"))),
 
     // ── Menu commands: /path param* ───────────────────────────
     menu_command: ($) =>
@@ -373,12 +393,13 @@ module.exports = grammar({
     // ── Mixed scalar: colon-separated or account-like values ──
     // Values such as `03:17` (time), `1:50` (client-id),
     // `both-addresses:2/0` (classifier) or `048038813@digi` (account)
-    // that are neither plain numbers, identifiers, IPs nor MACs. The
-    // token must start alphanumeric so a colon that opens a token
-    // (e.g. `:put`) is never swallowed.
+    // that are neither plain numbers, identifiers, IPs nor MACs. A segment
+    // may also be an empty quoted string (`devices=serial0:""`). The token
+    // must start alphanumeric so a colon that opens a token (e.g. `:put`)
+    // is never swallowed.
     mixed_value: ($) =>
       token(choice(
-        /[A-Za-z0-9_][A-Za-z0-9_@.\-]*(:[A-Za-z0-9_@.\/\-]+)+/,
+        /[A-Za-z0-9_][A-Za-z0-9_@.\-]*(:([A-Za-z0-9_@.\/\-]+|""))+/,
         /[0-9]+@[A-Za-z0-9_.\-]+/,
       )),
 

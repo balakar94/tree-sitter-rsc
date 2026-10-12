@@ -97,6 +97,42 @@ Block as in-clause value (onerror)
             (number)))))))
 
 ==========
+Bare brace block at top level
+==========
+
+{
+:local IP 192.168.88.77;
+:local CIDRnetmask 255.255.255.0;
+:put ($IP&$CIDRnetmask);
+}
+
+---
+
+(source_file
+  (block
+    (global_command
+      (global_command_name
+        (identifier))
+      (identifier)
+      (literal
+        (ip_address)))
+    (global_command
+      (global_command_name
+        (identifier))
+      (identifier)
+      (literal
+        (ip_address)))
+    (global_command
+      (global_command_name
+        (identifier))
+      (subexpression
+        (variable_reference
+          (identifier))
+        (operator)
+        (variable_reference
+          (identifier))))))
+
+==========
 Nested statement blocks
 ==========
 

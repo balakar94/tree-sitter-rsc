@@ -292,6 +292,27 @@ IPv6 is not mistaken for a mixed scalar
       (ip_address))))
 
 ==========
+Colon-separated scalar with empty quoted segment
+==========
+
+/container/set your-container devices=serial0:""
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier)
+    (identifier)
+    (named_param
+      name: (identifier)
+      value: (literal
+        (mixed_value)))))
+
+==========
 Digit-led account scalar value
 ==========
 

@@ -1,0 +1,118 @@
+==========
+Print query — property selectors and symbols
+==========
+
+/interface/print
+?type=ether
+?type=vlan
+?#|!
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier))
+  (print_query
+    (named_param
+      name: (identifier)
+      value: (identifier)))
+  (print_query
+    (named_param
+      name: (identifier)
+      value: (identifier)))
+  (print_query
+    (query_symbol)
+    (query_symbol)
+    (query_symbol)))
+
+==========
+Print query — ordered property selector
+==========
+
+/ip/route/print
+?>comment=
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier)
+    (operator)
+    (identifier))
+  (print_query
+    (query_symbol)
+    (named_param
+      name: (identifier))))
+
+==========
+Print query — ordered and combined
+==========
+
+/ip/route/print
+?>distance=1
+?gateway=172.16.1.1
+?#&!
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier)
+    (operator)
+    (identifier))
+  (print_query
+    (query_symbol)
+    (named_param
+      name: (identifier)
+      value: (literal
+        (number))))
+  (print_query
+    (named_param
+      name: (identifier)
+      value: (literal
+        (ip_address))))
+  (print_query
+    (query_symbol)
+    (query_symbol)
+    (query_symbol)))
+
+==========
+Print query — proplist selector followed by query
+==========
+
+/interface/print
+=.proplist=.id
+?type=ether
+
+---
+
+(source_file
+  (menu_command
+    (menu_prefix)
+    (root_menu
+      (identifier))
+    (operator)
+    (identifier))
+  (menu_continuation
+    (operator)
+    (operator)
+    (named_param
+      name: (identifier)
+      value: (operator))
+    (identifier))
+  (print_query
+    (named_param
+      name: (identifier)
+      value: (identifier))))

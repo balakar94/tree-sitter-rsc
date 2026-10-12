@@ -113,6 +113,10 @@
           "named": true
         },
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "command_substitution",
           "named": true
         },
@@ -146,6 +150,10 @@
         },
         {
           "type": "parent_navigation",
+          "named": true
+        },
+        {
+          "type": "print_query",
           "named": true
         },
         {
@@ -176,6 +184,10 @@
           "named": true
         },
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "command_substitution",
           "named": true
         },
@@ -209,6 +221,10 @@
         },
         {
           "type": "parent_navigation",
+          "named": true
+        },
+        {
+          "type": "print_query",
           "named": true
         },
         {
@@ -663,6 +679,25 @@
     }
   },
   {
+    "type": "print_query",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "named_param",
+          "named": true
+        },
+        {
+          "type": "query_symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "root_menu",
     "named": true,
     "fields": {},
@@ -692,6 +727,10 @@
         },
         {
           "type": "array_access",
+          "named": true
+        },
+        {
+          "type": "block",
           "named": true
         },
         {
@@ -728,6 +767,10 @@
         },
         {
           "type": "parent_navigation",
+          "named": true
+        },
+        {
+          "type": "print_query",
           "named": true
         },
         {
@@ -874,6 +917,10 @@
     "named": false
   },
   {
+    "type": "?",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -949,6 +996,10 @@
   },
   {
     "type": "parent_navigation",
+    "named": true
+  },
+  {
+    "type": "query_symbol",
     "named": true
   },
   {
