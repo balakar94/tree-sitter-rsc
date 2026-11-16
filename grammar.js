@@ -238,7 +238,7 @@ module.exports = grammar({
         seq("$", $.identifier),
         seq("$", /[0-9]+/),
         seq("$", $.global_command_name),
-        seq("$", $.string),
+        seq("$", alias($._quoted_variable_name, $.string)),
       ),
 
     array_access: ($) =>
@@ -324,30 +324,30 @@ module.exports = grammar({
       )),
 
     string: ($) =>
-      token(
-        choice(
-          seq(
-            '"',
-            repeat(choice(
-              /[^"\\\n\r]+/,
-              /\\./,
-              // Line continuation inside a string (RouterOS `source=` scripts
-              // span lines this way): backslash followed by an explicit newline.
-              /\\\r?\n/,
-            )),
-            '"',
-          ),
-          seq(
-            "'",
-            repeat(choice(
-              /[^'\\\n\r]+/,
-              /\\./,
-              /\\\r?\n/,
-            )),
-            "'",
-          ),
+      choice(
+        seq(
+          '"',
+          repeat(choice(
+            token.immediate(/[^"\\$\n\r]+/),
+            token.immediate(/\\(?:[^\r\n]|\r?\n)/),
+            token.immediate(/\$+/),
+            $.string_interpolation,
+          )),
+          token.immediate('"'),
         ),
+        $._single_quoted_string,
       ),
+
+    string_interpolation: ($) => token.immediate(prec(1, /\$[A-Za-z_][A-Za-z0-9_]*/)),
+
+    _quoted_variable_name: ($) =>
+      choice(
+        token(seq('"', repeat(choice(/[^"\\\n\r]+/, /\\./, /\\\r?\n/)), '"')),
+        $._single_quoted_string,
+      ),
+
+    _single_quoted_string: ($) =>
+      token(seq("'", repeat(choice(/[^'\\\n\r]+/, /\\./, /\\\r?\n/)), "'")),
 
     boolean_literal: ($) =>
       token(prec(2, choice("true", "false", "yes", "no"))),

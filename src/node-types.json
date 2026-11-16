@@ -785,6 +785,21 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "string_interpolation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "sub_menu",
     "named": true,
     "fields": {},
@@ -886,6 +901,10 @@
   },
   {
     "type": "\n",
+    "named": false
+  },
+  {
+    "type": "\"",
     "named": false
   },
   {
@@ -1003,7 +1022,7 @@
     "named": true
   },
   {
-    "type": "string",
+    "type": "string_interpolation",
     "named": true
   },
   {

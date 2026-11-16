@@ -126,3 +126,32 @@ Double-quote string with single quote inside
       (string))))
 
 
+==========
+Interpolation after a string continuation
+==========
+
+:put "https://example.test/$device/\
+$path"
+
+---
+
+(source_file
+  (global_command
+    (global_command_name (identifier))
+    (literal
+      (string
+        (string_interpolation)
+        (string_interpolation)))))
+
+==========
+Dollar in a quoted variable name is literal
+==========
+
+:put $"port-$index"
+
+---
+
+(source_file
+  (global_command
+    (global_command_name (identifier))
+    (variable_reference (string))))

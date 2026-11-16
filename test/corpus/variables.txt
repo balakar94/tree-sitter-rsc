@@ -17,7 +17,7 @@ Variable reference
 Variable in string
 ==========
 
-:put "Hello $name"
+:put "Hello $name, literal=\$name, dollars=$$$name"
 
 ---
 
@@ -26,7 +26,7 @@ Variable in string
     (global_command_name
       (identifier))
     (literal
-      (string))))
+      (string (string_interpolation)))))
 
 ==========
 Multiple variable references
